@@ -2,7 +2,7 @@ Theta_i = [0,0,0].'; % deg
 Omega_i= [15    , -15, 15].'*pi/180; %deg/s 
 X_i = [Theta_i; Omega_i]; % deg -> rad
 Theta_des=[30,50,70].'*pi/180;   
-Omega_des=[0.2,0.2,0.2].'*pi/180;
+Omega_des=[0.2,0.2,0.2].'*pi/180*0;
 X_des = [Theta_des; Omega_des];
 I_c = 0.00042; % kg m^2
 I= [2.10, 0, 0; 0, 2.3, -0.03; 0.01, -0.03, 1.72]; % kg m^2
@@ -27,16 +27,16 @@ mu=3.986e14;
 n = sqrt(mu/R^3);
 
 Kp_t=[1;1;1]*1e-2;
-Kd_t= 1e-4;
-Ki_t=1e-4*0;
+Kd_t= 2*1e-4;
+Ki_t=[1;1;10]*1e-8;
 Kp_w=1.1*[1;1 ;1]*1e-1;
 Kd_w=1e-1;
-Ki_w=1e-4;
+Ki_w=0  *1e-4;
 
 
 
 K_unload=1.5*[1;1;1]*1e2;  
-K_redist = [1;1;5]*1e1;
+K_redist = [1;1;5]*1e0;
     
 % test
 % Theta_test = [0;0;0];
