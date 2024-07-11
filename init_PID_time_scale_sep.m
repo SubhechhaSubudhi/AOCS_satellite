@@ -26,16 +26,20 @@ R = earthRadius+orbit_alt;
 mu=3.986e14;
 n = sqrt(mu/R^3);
 
-Kp_t=[1;1;1]*1e-2;
+% Sensor noise
+Theta_noise = (0.01*pi/180)^2*[1;1;1];
+Omega_noise = (0.001 *pi/180)^2*[1;1;1];
+
+Kp_t=[1;2;5]*1e-2;  
 Kd_t= 2*1e-4;
-Ki_t=[1;1;10]*1e-8;
+Ki_t=[1;1;10]*1e-7;
 Kp_w=1.1*[1;1 ;1]*1e-1;
 Kd_w=1e-1;
-Ki_w=0  *1e-4;
+Ki_w=0  *1e-10;
 
 
 
-K_unload=1.5*[1;1;1]*1e2;  
+K_unload=1.5*[1;1;1]*1e-1;  
 K_redist = [1;1;5]*1e0;
     
 % test
