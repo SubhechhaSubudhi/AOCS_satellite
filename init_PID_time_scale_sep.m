@@ -26,16 +26,17 @@ R = earthRadius+orbit_alt;
 mu=3.986e14;
 n = sqrt(mu/R^3);
 
-Kp_t=[1;1;10]*1e-2;
+Kp_t=[1;1;1]*1e-2;
 Kd_t= 1e-4;
 Ki_t=1e-4*0;
-Kp_w=[1;1;1]*1e-1;
-Kd_w=1e-3;
-Ki_w=1e-3*0;
+Kp_w=1.1*[1;1 ;1]*1e-1;
+Kd_w=1e-1;
+Ki_w=1e-4;
 
 
 
-K_unload=[1;1;1]*1e1;  
+K_unload=1.5*[1;1;1]*1e2;  
+K_redist = [1;1;5]*1e1;
     
 % test
 % Theta_test = [0;0;0];
