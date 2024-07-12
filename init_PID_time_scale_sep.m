@@ -31,8 +31,8 @@ mu=3.986e14;
 n = sqrt(mu/R^3);
 
 % Sensor noise
-Theta_noise = 0*(0.01*pi/180)^2*[1;1;1];
-Omega_noise = 0*(0.001 *pi/180)^2*[1;1;1];
+Theta_noise = (0.01*pi/180)^2*[1;1;1];
+Omega_noise = (0.001 *pi/180)^2*[1;1;1];
 
 % PID gains
 Kp_t=[1;1;1]*1e-2;  
@@ -50,14 +50,14 @@ out=sim('PID_time_scale_sep.slx')
 
 %%
 figure(1)
-plot(out.X.Time,out.X.Data(:,1),out.X.Time,out.X.Data(:,2),out.X.time,out.X.Data(:,3))
+plot(out.X.Time,out.X.Data(:,1)*180/pi,out.X.Time,out.X.Data(:,2)*180/pi,out.X.time,out.X.Data(:,3)*180/pi)
 legend('theta1','theta2','theta3')
-title('Attitude Euler angle')
+title('Attitude Euler angle (deg)')
 
 figure(2)
-plot(out.X.Time,out.X.Data(:,4),out.X.Time,out.X.Data(:,5),out.X.time,out.X.Data(:,6))
+plot(out.X.Time,out.X.Data(:,4)*180/pi,out.X.Time,out.X.Data(:,5)*180/pi,out.X.time,out.X.Data(:,6)*180/pi)
 legend('omega1','omega2','omega3')
-title('Angular velocity')
+title('Angular velocity (deg/sec)')
 
 figure(3)
 plot(out.Q.Time,squeeze(out.Q.Data(1,:,:)),out.Q.Time,squeeze(out.Q.Data(2,:,:)),out.Q.time,squeeze(out.Q.Data(3,:,:)),out.Q.time,squeeze(out.Q.Data(4,:,:)))
@@ -67,14 +67,24 @@ title('Attitude quaternion')
 figure(4)
 plot(out.H_rw_tsat_msat.Time,out.H_rw_tsat_msat.Data(:,1),out.H_rw_tsat_msat.Time,out.H_rw_tsat_msat.Data(:,2),out.H_rw_tsat_msat.time,out.H_rw_tsat_msat.Data(:,3),out.H_rw_tsat_msat.time,out.H_rw_tsat_msat.Data(:,4))
 legend('Wheel1','Wheel2','Wheel3','Wheel4')
-title('Reaction wheel momentum')
+title('Reaction wheel momentum (Nms)')
 
 figure(5)
-plot(out.T_rw_tsat_msat.Time,out.T_rw_tsat_msat.Data(:,1),out.T_rw_tsat_msat.Time,out.T_rw_tsat_msat.Data(:,2),out.T_rw_tsat_msat.time,out.T_rw_tsat_msat.Data(:,3),out.T_rw_tsat_msat.time,out.T_rw_tsat_msat.Data(:,4))
+plot(out.T_unload_rw.Time,squeeze(out.T_unload_rw.Data(1,:,:)),out.T_unload_rw.Time,squeeze(out.T_unload_rw.Data(2,:,:)),out.T_unload_rw.time,squeeze(out.T_unload_rw.Data(3,:,:)),out.T_unload_rw.time,squeeze(out.T_unload_rw.Data(4,:,:)))
 legend('Wheel1','Wheel2','Wheel3','Wheel4')
-title('Reaction wheel Torque')
+title('External Unloading Torque (Nm)')
 
 figure(6)
+plot(out.T_rw_tsat_msat.Time,out.T_rw_tsat_msat.Data(:,1),out.T_rw_tsat_msat.Time,out.T_rw_tsat_msat.Data(:,2),out.T_rw_tsat_msat.time,out.T_rw_tsat_msat.Data(:,3),out.T_rw_tsat_msat.time,out.T_rw_tsat_msat.Data(:,4))
+legend('Wheel1','Wheel2','Wheel3','Wheel4')
+title('Reaction wheel Torque (Nm)')
+
+figure(7)
 plot(out.T_c.Time,out.T_c.Data(:,1),out.T_c.Time,out.T_c.Data(:,2),out.T_c.time,out.T_c.Data(:,3))
 legend('T_c1','T_c2','T_c3')
-title('Control torque')
+title('Control torque (Nm)')
+
+figure(8)
+plot(out.H_satellite.Time,out.H_satellite.Data(:,1),out.H_satellite.Time,out.H_satellite.Data(:,2),out.H_satellite.time,out.H_satellite.Data(:,3))
+legend('H1','H2','H3')
+title('Angular momentum of satellite (Nms)')
