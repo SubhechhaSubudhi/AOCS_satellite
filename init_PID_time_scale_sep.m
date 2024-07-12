@@ -31,8 +31,8 @@ mu=3.986e14;
 n = sqrt(mu/R^3);
 
 % Sensor noise
-Theta_noise = (0.01*pi/180)^2*[1;1;1];
-Omega_noise = (0.001 *pi/180)^2*[1;1;1];
+Theta_noise = 0*(0.01*pi/180)^2*[1;1;1];
+Omega_noise = 0*(0.001 *pi/180)^2*[1;1;1];
 
 % PID gains
 Kp_t=[1;1;1]*1e-2;  
@@ -74,17 +74,27 @@ plot(out.T_unload_rw.Time,squeeze(out.T_unload_rw.Data(1,:,:)),out.T_unload_rw.T
 legend('Wheel1','Wheel2','Wheel3','Wheel4')
 title('External Unloading Torque (Nm)')
 
+figure(9)
+plot(out.T_redist_rw.Time,squeeze(out.T_redist_rw.Data(1,:,:)),out.T_redist_rw.Time,squeeze(out.T_redist_rw.Data(2,:,:)),out.T_redist_rw.time,squeeze(out.T_redist_rw.Data(3,:,:)),out.T_redist_rw.time,squeeze(out.T_redist_rw.Data(4,:,:)))
+legend('Wheel1','Wheel2','Wheel3','Wheel4')
+title('Redistributing Torque (Nm)')
+
 figure(6)
 plot(out.T_rw_tsat_msat.Time,out.T_rw_tsat_msat.Data(:,1),out.T_rw_tsat_msat.Time,out.T_rw_tsat_msat.Data(:,2),out.T_rw_tsat_msat.time,out.T_rw_tsat_msat.Data(:,3),out.T_rw_tsat_msat.time,out.T_rw_tsat_msat.Data(:,4))
-legend('Wheel1','Wheel2','Wheel3','Wheel4')
+legend('Wheel1','Wheel2','Wheel3','Wheel4') 
 title('Reaction wheel Torque (Nm)')
 
 figure(7)
 plot(out.T_c.Time,out.T_c.Data(:,1),out.T_c.Time,out.T_c.Data(:,2),out.T_c.time,out.T_c.Data(:,3))
-legend('T_c1','T_c2','T_c3')
+legend('T_{c1}','T_{c2}','T_{c3}')
 title('Control torque (Nm)')
 
 figure(8)
 plot(out.H_satellite.Time,out.H_satellite.Data(:,1),out.H_satellite.Time,out.H_satellite.Data(:,2),out.H_satellite.time,out.H_satellite.Data(:,3))
 legend('H1','H2','H3')
 title('Angular momentum of satellite (Nms)')
+
+%%
+Theta_settling_time = [calc_settling_time(out.X.Time,out.X.Data(:,1),2);calc_settling_time(out.X.Time,out.X.Data(:,2),2);calc_settling_time(out.X.Time,out.X.Data(:,3),2)]
+Omega_settling_time = [calc_settling_time(out.X.Time,out.X.Data(:,1),4);calc_settling_time(out.X.Time,out.X.Data(:,5),2);calc_settling_time(out.X.Time,out.X.Data(:,6),2)]
+X_final_value = out.X.Data(out.X.time==max(max(Theta_settling_time),max(Omega_settling_time)),:)*180/pi % in deg and deg/s
