@@ -14,9 +14,9 @@ T_c_max = 0.015; % Nm
 H_c_max = 0.035; % Nms
 beta = 40*pi/180; % RW titlt angle
 
-% R_rw = [cos(beta), 0, -cos(beta), 0;
-%     0, cos(beta), 0, -cos(beta);
-%     sin(beta), sin(beta), sin(beta), sin(beta)];
+R_rw_o = [cos(beta), 0, -cos(beta), 0;
+    0, cos(beta), 0, -cos(beta);
+    sin(beta), sin(beta), sin(beta), sin(beta)];
 % R_rw_pinv = pinv(R_rw);
 R_rw_pinv = 0.5*[1/cos(beta),0/cos(beta),0.5/sin(beta),0.5;
     0/cos(beta),1/cos(beta),0.5/sin(beta),-0.5;
